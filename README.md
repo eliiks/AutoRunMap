@@ -1,5 +1,6 @@
 # AutoRunMap
-AutoRunMap is a mapping application for the AutoRun project, allowing users to draw and export running routes in GeoJSON format.
+AutoRunMap is a mapping application for the AutoRun project, allowing users to draw and export running routes in GeoJSON format.\
+**This application is currently under development and subject to future changes.**
 
 ## How to Access the Map
 To use the map, first launch the server with the following command:
@@ -21,3 +22,8 @@ To erase the current drawing, click the "Clear Path" button at the bottom.
 After placing at least two markers, you can export the path as a GeoJSON file by clicking "Export GeoJSON" and saving the file.\
 To import a GeoJSON file and display a saved path, click "Import GeoJSON" and select a file.\
 ⚠️ Importing a file will erase the current drawing on the map.⚠️
+
+## Credits
+Web integration : me [Eliiks](https://eliiks.github.io/) \
+Visual design : [Braun](https://camillebraun.github.io/) \
+Original concept : [Pulkio](https://pulkio.github.io/PortfolioData/html/accueil.html)
