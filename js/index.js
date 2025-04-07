@@ -55,7 +55,7 @@ function resetPath(){
 
 /* If user has click again on the FIRST marker placed, the path drawing is finished */
 function onStartMarkerClick(e) {
-    if(pathPoints.length > 1){
+    if(!isPathDrawingComplete && pathPoints.length > 1){
         removeLastMarker(lastMarker); // Must remove the last marker..
         lastMarker = startMarker;
         
@@ -68,7 +68,7 @@ function onStartMarkerClick(e) {
 
 /* If user has click again on the LAST marker placed, the path drawing is finished */
 function onLastMarkerClick(e) {
-    if(pathPoints.length > 1){
+    if(!isPathDrawingComplete && pathPoints.length > 1){
         isPathDrawingComplete = true;
     }
 }
