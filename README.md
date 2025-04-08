@@ -3,16 +3,17 @@ AutoRunMap is a mapping application for the AutoRun project, allowing users to d
 **This application is currently under development and subject to future changes.**
 
 ## How to Access the Map
-To use the map, first launch the server with the following command:
+You can test the application here : https://eliiks.github.io/AutoRunMap/ \
+To use the map locally, first launch the server with the following command :
 ```
 node app.js
-```
-Then, open [index.html](index.html) in your favorite web browser.
+````
+Then, open your favorite web browser and enter http://localhost:3000/ in the address bar.
 
 ## How to Draw on the Map
 Zoom in and out using the mouse scroll wheel or the "+" and "-" buttons in the top-left corner.\
 To create a path, click at least twice on the desired locations on the map. Continue extending the path by clicking on additional points.\
-To finish the path, you have two options:
+To finish the path, you have two options :
 + Click again on the last marker you placed.
 + Click on the first (green) marker to create a loop.
   
