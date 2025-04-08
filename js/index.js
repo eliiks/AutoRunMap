@@ -1,4 +1,5 @@
 import { startMarkerIcon, finishMarkerIcon } from './customMarkers.js';
+import { INFO_MSG, ERROR_EXPORT_MSG } from "./customMessages.js";
 
 /* HTML elements & CSS variables */
 const infoMsgDiv = document.getElementById("info-msg");
@@ -30,6 +31,7 @@ map.on('click', function(e) {
             startMarker = marker;
             startMarker.on('click', onStartMarkerClick);
         }else{
+            displayMsg(INFO_MSG);
             if(pathPoints.length > 1) removeLastMarker(lastMarker);
             addLastMarker(marker)
         }
@@ -53,6 +55,13 @@ function resetPath(){
     pathLine = L.polyline([], { color: style.getPropertyValue("--map-path-color") }).addTo(map);
 }
 
+function displayMsg(msg, delay = 0){ 
+    infoMsgDiv.innerHTML = msg;
+    infoMsgDiv.style.display = "block";
+    if(delay > 0) setTimeout(() => hideInfoMsg(), delay);
+}
+function hideInfoMsg(){ infoMsgDiv.style.display = "none"; }
+
 /* If user has click again on the FIRST marker placed, the path drawing is finished */
 function onStartMarkerClick(e) {
     if(!isPathDrawingComplete && pathPoints.length > 1){
@@ -63,6 +72,7 @@ function onStartMarkerClick(e) {
         pathLine.setLatLngs(pathPoints); // .. and create the line between the last point and the start point
         
         isPathDrawingComplete = true;
+        hideInfoMsg();
     }
 }
 
@@ -70,6 +80,7 @@ function onStartMarkerClick(e) {
 function onLastMarkerClick(e) {
     if(!isPathDrawingComplete && pathPoints.length > 1){
         isPathDrawingComplete = true;
+        hideInfoMsg();
     }
 }
 
@@ -121,6 +132,7 @@ function setGeoJSON(geojson){
     // Fit map to the loaded GeoJSON
     map.fitBounds(pathLine.getBounds());
     isPathDrawingComplete = true;
+    hideInfoMsg();
 }
 
 /* Import GeoJSON file button event */
@@ -161,8 +173,7 @@ document.getElementById('GeoJSONExportButton').addEventListener('click', functio
         a.click();
         document.body.removeChild(a);
     }else{
-        infoMsgDiv.style.display = "block";
-        setTimeout(() => infoMsgDiv.style.display = "none", 3000);
+        displayMsg(ERROR_EXPORT_MSG, 5000);
     }
 });
 
