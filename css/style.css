@@ -11,7 +11,6 @@
 body{
     font-family: var(--primary-font);
     background-color: var(--background);
-    overflow: hidden;
 }
 
 #map{
@@ -25,9 +24,10 @@ body{
 
 .buttons-container{
     display: flex;
+    flex-direction: row;;
     align-items: center;
     gap: 20px;
-    padding: 20px 0 20px 0;
+    padding: 20px 0 10px 0;
 }
 
 .primary-button{
@@ -83,4 +83,10 @@ body{
     margin: 0;
     color:var(--contrast);
     font-size:14px;
+}
+
+@media screen and (max-width: 768px){
+    .buttons-container{
+        flex-direction: column;
+    }
 }
