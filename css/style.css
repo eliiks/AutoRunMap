@@ -81,12 +81,21 @@ body{
 .info-msg{
     display: none;
     margin: 0;
+    text-align: center;
     color:var(--contrast);
     font-size:14px;
 }
 
 @media screen and (max-width: 768px){
+    #map{
+        height: calc(80vh - 100px);
+    }
+
     .buttons-container{
         flex-direction: column;
+    }
+
+    .buttons-container .info-msg{
+        order: -1;
     }
 }
