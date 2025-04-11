@@ -1,23 +1,35 @@
 import { startMarkerIcon, finishMarkerIcon } from './customMarkers.js';
 import { INFO_MSG, ERROR_EXPORT_MSG } from "./customMessages.js";
 
-/* HTML elements & CSS variables */
-const infoMsgDiv = document.getElementById("info-msg");
-const style = getComputedStyle(document.body);
-
-/* Map initialization */
-const map = L.map('map').setView([46.92292810003886, 2.3510742187500004], 6);
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
 /* Variables */
 var pathLine; // Graphic path composed of multiple lines
 var pathPoints = []; // All points (lat, lng) on the map 
 var startMarker; // The marker placed on the start of the run
 var lastMarker; // The last marker that user has placed
 var isPathDrawingComplete = false; // Tells if the user has finished to draw the run path
+
+/* HTML elements & CSS variables */
+const infoMsgDiv = document.getElementById("info-msg");
+const style = getComputedStyle(document.body);
+
+/* Map initialization */
+const map = L.map('map').setView([48.637329308391976, -1.904808282852173], 18);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+
+const pathFindingTool = L.Routing.control({
+    waypoints: pathPoints,
+    show: false,
+    waypointMode: 'snap',
+    lineOptions:{
+        addWaypoints: false,
+        styles: [{color: style.getPropertyValue("--map-path-color"), opacity: 1, weight: 3}]
+    },
+    createMarker: function() {}
+}).addTo(map);
+
 resetPath(); //Set all variables default values
 
 map.on('click', function(e) {
@@ -25,21 +37,21 @@ map.on('click', function(e) {
     if(!isPathDrawingComplete) {
         let point = e.latlng; // Point = numeric
         let marker = L.marker(point).addTo(map); // Marker = graphic
-
-        if(pathPoints.length == 0) {
+        pathPoints.push([point.lat, point.lng]);
+        
+        if(pathPoints.length == 1) {
             marker.setIcon(startMarkerIcon);
             startMarker = marker;
             startMarker.on('click', onStartMarkerClick);
-        }else{
+        }else if(pathPoints.length > 1) {
             displayMsg(INFO_MSG);
-            if(pathPoints.length > 1) removeLastMarker(lastMarker);
+            removeLastMarker(lastMarker);
             addLastMarker(marker)
+            updatePath();
         }
         
+        // Original drawing
         console.log(`Point added: ${point.lat}, ${point.lng}`);
-
-        pathPoints.push([point.lat, point.lng]);
-        pathLine.setLatLngs(pathPoints);
     }
 })
 
@@ -53,6 +65,11 @@ function resetPath(){
     pathPoints = [];
     isPathDrawingComplete = false;
     pathLine = L.polyline([], { color: style.getPropertyValue("--map-path-color") }).addTo(map);
+    updatePath();
+}
+
+function updatePath(){
+    pathFindingTool.setWaypoints(pathPoints);
 }
 
 function displayMsg(msg, delay = 0){ 
@@ -69,7 +86,7 @@ function onStartMarkerClick(e) {
         lastMarker = startMarker;
         
         pathPoints.push(pathPoints[0]); 
-        pathLine.setLatLngs(pathPoints); // .. and create the line between the last point and the start point
+        updatePath();
         
         isPathDrawingComplete = true;
         hideInfoMsg();
@@ -133,6 +150,7 @@ function setGeoJSON(geojson){
     map.fitBounds(pathLine.getBounds());
     isPathDrawingComplete = true;
     hideInfoMsg();
+    updatePath();
 }
 
 /* Import GeoJSON file button event */

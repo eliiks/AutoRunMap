@@ -18,6 +18,10 @@ body{
     border-radius: 10px;
 }
 
+.leaflet-routing-container {
+    display:none;
+  }
+
 .leaflet-grab{
     cursor: crosshair!important;
 }
