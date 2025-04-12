@@ -16,10 +16,13 @@ const style = getComputedStyle(document.body);
 const map = L.map('map').setView([48.637329308391976, -1.904808282852173], 18);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://openstreetmap.org/fixthemap">Fix map</a>'
 }).addTo(map);
 
 const pathFindingTool = L.Routing.control({
+    router: L.Routing.osrmv1({
+        serviceUrl : "https://routing.openstreetmap.de/routed-foot/route/v1"
+    }),
     waypoints: pathPoints,
     show: false,
     waypointMode: 'snap',
