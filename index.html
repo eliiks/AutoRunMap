@@ -15,9 +15,10 @@
         <!-- Leaflet CSS & JS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
         <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
+
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
         <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
-        
+
         <title>AutoRun | Draw your run</title>
     </head>
     <body>
@@ -30,7 +31,10 @@
             <label id="GeoJSONImportButton" for="fileInput" class="primary-button">Import GeoJSON</label>
             <a id="GeoJSONExportButton" href="#" class="primary-button"> Export GeoJSON </a>
             <a id="ClearPath" href="#" class="secondary-button"> Clear path </a>
-            <p id="info-msg" class="info-msg"> </p>
+            <div id="info-container" class="info-container">
+                <p id="info-distance" class="info-msg"> </p>
+                <p id="info-msg" class="info-msg"> </p>
+            </div>
         </div>
 
         <script type="module" src="js/index.js"></script>

@@ -82,10 +82,14 @@ body{
     color: #000;
 }
 
+.info-container{
+    display: flex;
+    flex-direction: column;
+}
+
 .info-msg{
     display: none;
     margin: 0;
-    text-align: center;
     color:var(--contrast);
     font-size:14px;
 }
